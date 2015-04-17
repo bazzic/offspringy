@@ -17,12 +17,13 @@ body {
 h1,h2,h3,h4,h5,h6 { font-family: $raleway-regular; }
 h1 {
   @include breakpoint(lg) {
-    font-size: 72px;
+    font-size: 3em;
+    color: #A2AB58;
   }
 }
 h2 {
   @include breakpoint(lg) {
-    font-size: 60px;
+    font-size: 2.5em;
   }
   .field-name-field-landing-f-img-left-body & {
     @include raleway-regular();
@@ -68,4 +69,13 @@ blockquote {
 }
 .green {
   @include text-color($green);
+}
+
+a {
+  color: #67BCDB;
+  &,
+  &:hover,
+  &:focus {
+    color: #67BCDB;
+  }
 }

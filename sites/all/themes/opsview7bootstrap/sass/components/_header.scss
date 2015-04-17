@@ -1,0 +1,20 @@
+/*******************************************************************************
+ * _header.scss
+ *
+ * Styles for header edge to edge region.
+ ******************************************************************************/
+ 
+ .logo {
+  font-family: 'Lobster';
+  color: #67BCDB;
+  font-size: 3em;
+  text-transform: none;
+  &,
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    color: #67BCDB;
+  }
+}
+
+ 

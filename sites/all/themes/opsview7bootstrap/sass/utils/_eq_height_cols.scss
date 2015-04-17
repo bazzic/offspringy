@@ -1,0 +1,38 @@
+/*******************************************************************************
+ * _eq_height_cols.scss
+ *
+ * Styling to make responsive columns of equal height.
+ * Based on http://www.minimit.com/demos/bootstrap-3-responsive-columns-of-same-height
+ * Build your markup like:
+ *  <div class="row">
+ *    <div class="row-same-height">
+ *       <div class="col-sm-4 col-same-height col-top"></div>
+ *       <div class="col-sm-4 col-same-height col-middle"></div>
+ *       <div class="col-sm-4 col-same-height col-bottom"></div>
+ *     </div>
+ * </div>
+ ******************************************************************************/
+
+/* columns of same height styles */
+.row-same-height {
+  @include breakpoint(sm) {
+    display: table;
+//    width: 100%;
+  }
+}
+.col-same-height {
+  @include breakpoint(sm) {
+    display: table-cell;
+    float: none !important;
+  }
+}
+/* vertical alignment styles */
+.col-top {
+  vertical-align: top;
+}
+.col-middle {
+  vertical-align: middle;
+}
+.col-bottom {
+  vertical-align: bottom;
+}

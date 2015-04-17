@@ -1,0 +1,63 @@
+/*******************************************************************************
+ * _images.scss
+ *
+ * General image styles.
+ ******************************************************************************/
+img {
+  @include img-responsive;
+}
+// Images inside equal height columns need 100% width
+// to avoid their inline width eating up space of other columns
+.col-same-height img {
+  width: 100%;
+}
+.framed-image {
+  @include breakpoint(sm) {
+    img {
+      margin: 0 auto;
+    }
+  }
+  @include breakpoint(sm) {
+    background: $light-grey;
+    div[class*="4"] & { // .col-sm-4 .framed-image img on ipad portrait
+      img {
+        max-width: 85%;
+        padding: 15px 0;
+      }
+    }
+    div[class*="6"] & { // .col-sm-6 .framed-image img on ipad portrait
+      img {
+        max-width: 87%;
+        padding: 20px 0;
+      }
+    }
+  }
+  @include breakpoint(md) {
+    div[class*="4"] & { // .col-md-4 .framed-image img on ipad landscape
+      img {
+        max-width: 87%;
+        padding: 20px 0;
+      }
+    }
+    div[class*="6"] & { // .col-md-6 .framed-image img on ipad landscape
+      img {
+        max-width: 90%;
+        padding: 20px 0;
+      }
+    }
+  }
+  @include breakpoint(lg) {
+    div[class*="4"] & { // .col-md-4 .framed-image img on desktop
+      img {
+        max-width: 87%;
+        padding: 20px 0;
+      }
+    }
+    div[class*="6"] & { // .col-md-6 .framed-image img on desktop
+      img {
+        max-width: 90%;
+        padding: 25px 0;
+      }
+    }
+  }
+}

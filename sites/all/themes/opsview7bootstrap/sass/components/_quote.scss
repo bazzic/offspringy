@@ -1,0 +1,62 @@
+/*******************************************************************************
+ * _quote.scss
+ *
+ * Styling of Display Suite quote region on Landing page content type.
+ ******************************************************************************/
+.ds-quote {
+  @include breakpoint(sm) {
+    background-color: $yellow;
+  }
+}
+.quote-bg-color {
+  background-color: $yellow;
+  padding: 10px 30px;
+  @include breakpoint(sm) {
+    background-color: none;
+  }
+}
+.field-name-field-landing-pull-quote {
+  color: white;
+  @include raleway-regular();
+  font-size:22px;
+  line-height: 28px;
+  @include breakpoint(sm) {
+    font-size: 36px;
+    line-height: 48px;
+    padding-bottom: 20px;
+  }
+  > p {
+    position: relative;
+    margin-bottom: 0;
+  }
+}
+.commas {
+  font-size: 48px;
+  @include breakpoint(xs) {
+    position: relative;
+    top: 12px;
+    line-height: 10px;
+  }
+}
+.opening-commas {
+  position: absolute;
+  left: -20px;
+  @include breakpoint(sm) {
+    left: -25px;
+  }
+}
+.field-name-field-landing-quote-author {
+  @include raleway-regular;
+  font-size: 20px;
+  @include breakpoint(sm) {
+    font-size: 24px;
+  }
+}
+.field-name-field-landing-quote-author-role {
+  @include raleway-regular;
+  font-size: 20px;
+  @include breakpoint(sm) {
+    font-size: 24px;
+  }
+  margin-bottom: 30px;
+}

@@ -1,0 +1,173 @@
+/*******************************************************************************
+ * _fonts.scss
+ *
+ * Utilites/Mixins for fonts.
+ ******************************************************************************/
+@font-face {
+  font-family: 'roboto_slabbold';
+  src: url($base-theme-path + "/fonts/robotoslab/RobotoSlab-Bold-webfont.eot");
+  src: url($base-theme-path + "/fonts/robotoslab/RobotoSlab-Bold-webfont.eot?#iefix") format('embedded-opentype'),
+       url($base-theme-path + "/fonts/robotoslab/RobotoSlab-Bold-webfont.woff") format('woff'),
+       url($base-theme-path + "/fonts/robotoslab/RobotoSlab-Bold-webfont.ttf") format('truetype'),
+       url($base-theme-path + "/fonts/robotoslab/RobotoSlab-Bold-webfont.svg#roboto_slabbold") format('svg');
+}
+@font-face {
+  font-family: 'roboto_slablight';
+  src: url($base-theme-path + "/fonts/robotoslab/RobotoSlab-Light-webfont.eot");
+  src: url($base-theme-path + "/fonts/robotoslab/RobotoSlab-Light-webfont.eot?#iefix") format('embedded-opentype'),
+       url($base-theme-path + "/fonts/robotoslab/RobotoSlab-Light-webfont.woff") format('woff'),
+       url($base-theme-path + "/fonts/robotoslab/RobotoSlab-Light-webfont.ttf") format('truetype'),
+       url($base-theme-path + "/fonts/robotoslab/RobotoSlab-Light-webfont.svg#roboto_slablight") format('svg');
+}
+@font-face {
+  font-family: 'roboto_slabregular';
+  src: url($base-theme-path + "/fonts/robotoslab/RobotoSlab-Regular-webfont.eot");
+  src: url($base-theme-path + "/fonts/robotoslab/RobotoSlab-Regular-webfont.eot?#iefix") format('embedded-opentype'),
+       url($base-theme-path + "/fonts/robotoslab/RobotoSlab-Regular-webfont.woff") format('woff'),
+       url($base-theme-path + "/fonts/robotoslab/RobotoSlab-Regular-webfont.ttf") format('truetype'),
+       url($base-theme-path + "/fonts/robotoslab/RobotoSlab-Regular-webfont.svg#roboto_slabregular") format('svg');
+}
+@font-face {
+  font-family: 'roboto_slabthin';
+  src: url($base-theme-path + "/fonts/robotoslab/RobotoSlab-Thin-webfont.eot");
+  src: url($base-theme-path + "/fonts/robotoslab/RobotoSlab-Thin-webfont.eot?#iefix") format('embedded-opentype'),
+       url($base-theme-path + "/fonts/robotoslab/RobotoSlab-Thin-webfont.woff") format('woff'),
+       url($base-theme-path + "/fonts/robotoslab/RobotoSlab-Thin-webfont.eot");
+}
+@font-face {
+  font-family: 'roboto-black';
+  src: url($base-theme-path + "/fonts/roboto/Roboto-Black.ttf");
+}
+@font-face {
+  font-family: 'roboto-bold';
+  src: url($base-theme-path + "/fonts/roboto/Roboto-Bold.ttf");
+}
+@font-face {
+  font-family: 'roboto-italic';
+  src: url($base-theme-path + "/fonts/roboto/Roboto-Italic.ttf");
+}
+@font-face {
+  font-family: 'roboto-light';
+  src: url($base-theme-path + "/fonts/roboto/Roboto-Light.ttf");
+}
+@font-face {
+  font-family: 'roboto-medium';
+  src: url($base-theme-path + "/fonts/roboto/Roboto-Medium.ttf");
+}
+@font-face {
+  font-family: 'roboto-regular';
+  src: url($base-theme-path + "/fonts/roboto/Roboto-Regular.ttf");
+}
+@font-face {
+  font-family: 'roboto-thin';
+  src: url($base-theme-path + "/fonts/roboto/Roboto-Thin.ttf");
+}
+@font-face {
+  font-family: 'robotocondensed-bold';
+  src: url($base-theme-path + "/fonts/roboto/RobotoCondensed-Bold.ttf");
+}
+
+@font-face {
+  font-family: 'raleway-regular';
+  src: url($base-theme-path + "/fonts/Raleway/Raleway-Regular.ttf");
+}
+
+$robotoslab-bold: "roboto_slabbold", serif;
+$robotoslab-light: "roboto_slablight", serif;
+$robotoslab-regular: "roboto_slabregular", serif;
+$robotoslab-thin: "roboto_slabthin", serif;
+
+$roboto-black: "roboto-black", serif;
+$roboto-bold: "roboto-bold", serif;
+$roboto-italic: "roboto-italic", serif;
+$roboto-light: "roboto-light", serif;
+$roboto-medium: "roboto-medium", serif;
+$roboto-regular: "roboto-regular", serif;
+$roboto-thin: "roboto-thin", serif;
+
+$robotocondensed-bold: "robotocondensed-bold", serif;
+
+$raleway-regular: "raleway-regular", serif;
+
+
+@mixin robotoslab-bold {
+  font-family: $robotoslab-bold;
+}
+@mixin robotoslab-light {
+  font-family: $robotoslab-light;
+}
+@mixin robotoslab-regular {
+  font-family: $robotoslab-regular;
+}
+@mixin robotoslab-thin {
+  font-family: $robotoslab-thin;
+}
+@mixin roboto-black {
+  font-family: $roboto-black;
+}
+@mixin roboto-bold {
+  font-family: $roboto-bold;
+}
+@mixin roboto-italic {
+  font-family: $roboto-italic;
+}
+@mixin roboto-light {
+  font-family: $roboto-light;
+}
+@mixin roboto-medium {
+  font-family: $roboto-medium;
+}
+@mixin roboto-regular {
+  font-family: $roboto-regular;
+}
+@mixin roboto-thin {
+  font-family: $roboto-thin;
+}
+@mixin robotocondensed-bold {
+  font-family: $robotocondensed-bold;
+}
+
+@mixin raleway-regular {
+  font-family: $raleway-regular;
+}
+
+.robotoslab-bold {
+  @include robotoslab-bold();
+}
+.robotoslab-light {
+  @include robotoslab-light();
+}
+.robotoslab-regular {
+  @include robotoslab-regular();
+}
+.robotoslab-thin {
+  @include robotoslab-thin();
+}
+.roboto-black {
+  @include roboto-black();
+}
+.roboto-bold {
+  @include roboto-bold();
+}
+.roboto-italic {
+  @include roboto-italic();
+}
+.roboto-light {
+  @include roboto-light();
+}
+.roboto-medium {
+  @include roboto-medium();
+}
+.roboto-regular {
+  @include roboto-regular();
+}
+.roboto-thin {
+  @include roboto-thin();
+}
+.robotocondensed-bold {
+  @include robotocondensed-bold();
+}
+
+.raleway-regular {
+  @include raleway-regular();
+}

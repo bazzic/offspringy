@@ -1,0 +1,18 @@
+/*******************************************************************************
+ * style.scss
+ *
+ * This file shouldn't directly contain any SCSS code, instead it only serves to
+ * combine the SCSS contained in other Sass partials through @import directives.
+ *
+ * UTILS............Boilerplate stuff: fonts, grid mixins, etc.
+ * COMPONENTS......Modules, components that need to think about as standalone
+ * elements that can be dropped anywhere on the page.
+ ******************************************************************************/
+
+@import 'bootstrap-sass/bootstrap.scss';
+@import 'compass';
+@import 'utils';
+@import 'layouts/landing_page';
+@import 'layouts/home_page';
+@import 'components';
+@import url(http://fonts.googleapis.com/css?family=Lobster);

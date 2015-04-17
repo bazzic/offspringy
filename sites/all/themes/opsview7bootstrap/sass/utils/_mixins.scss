@@ -1,0 +1,45 @@
+/*******************************************************************************
+ * _mixins.scss
+ *
+ * Custom mixins.
+ ******************************************************************************/
+
+@mixin breakpoint($class) {
+  @if $class == xs {
+    @media (max-width: $screen-xs-max) {
+      @content;
+    }
+  } @else if $class == sm {
+    @media (min-width: $screen-sm) {
+      @content;
+    }
+  } @else if $class == md {
+    @media (min-width: $screen-md) {
+      @content;
+    }
+  } @else if $class == lg {
+    @media (min-width: $screen-lg) {
+      @content;
+    }
+  }
+}
+
+@mixin text-color($color) {
+  color: $color;
+}
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  $opacity-ie: $opacity * 100;
+  filter: alpha(opacity=$opacity-ie); //IE8
+}
+@mixin buttonify() {
+  text-transform: uppercase;
+  border: none;
+  @include raleway-regular;
+}
+@mixin transition($transition-property, $transition-duration, $transition-timing-function: ease, $transition-delay:0){
+  -webkit-transition: $transition-property $transition-duration $transition-timing-function $transition-delay;
+  -moz-transition: $transition-property $transition-duration $transition-timing-function $transition-delay;
+  -o-transition: $transition-property $transition-duration  $transition-timing-function $transition-delay;
+  transition: $transition-property $transition-duration  $transition-timing-function $transition-delay;
+}

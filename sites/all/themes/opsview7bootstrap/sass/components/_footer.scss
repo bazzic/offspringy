@@ -1,0 +1,57 @@
+/*******************************************************************************
+ * _footer.scss
+ *
+ * Styles for footer edge to edge region.
+ ******************************************************************************/
+.footer {
+  background: $body-colour;
+  color: $footer-text-colour;
+  .region  {
+    margin-bottom: 20px;
+    a {
+      padding: 3px 0;
+      color: $footer-text-colour;
+      &:hover {
+        background: none;
+        color: $green;
+      }
+    }
+    .icon-youtube {
+      padding-bottom: 5px;
+    }
+  }
+  .social-icons {
+    margin-bottom: 25px;
+    @include breakpoint(sm) {
+      float: left;
+    }
+    a {
+      display: inline-block;
+    }
+    picture {
+      float: left;
+      margin-right: 15px;
+    }
+  }
+  .block-title {
+    font-family: $raleway-regular;
+    margin-bottom: 20px;
+    color: white;
+  }
+}
+.contact-block {
+  margin-bottom: 30px;
+}
+
+.copyright-block {
+  @include breakpoint(sm) {
+    float: right;
+  }
+  p {
+    font-size: 13px;
+  }
+}
+.region-bottom-edge-to-edge .block-ds-extras {
+  background-color: $light-grey;
+  padding: 40px 0;
+}

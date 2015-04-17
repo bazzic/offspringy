@@ -1,0 +1,109 @@
+/*******************************************************************************
+ * _menus.scss
+ *
+ * The styling of menus.
+ ******************************************************************************/
+
+.navbar-default {
+  text-transform: uppercase;
+  padding-top: 20px;
+}
+.region-navigation {
+  @include breakpoint(sm) {
+    float: right;
+  }
+  .leaf {
+    float: left;
+  }
+  .block-menu .nav {
+    li {
+      padding-top: 4px;
+      padding-bottom: 4px;
+    }
+    a {
+      @extend .btn;
+      border: 2px solid $green;
+      @include breakpoint(sm) {
+        margin-left: 5px;
+        padding: 4px 8px;
+      }
+      @include breakpoint(md) {
+        margin-left: 10px;
+      }
+      @include breakpoint(lg) {
+        margin-left: 20px;
+      }
+    }
+  }
+}
+.navbar-nav {
+  .active {
+    font-family: $raleway-regular;
+    color: $black;
+  }
+  .active-trail > .active-trail {
+    font-family: $raleway-regular;
+  }
+  .navbar-nav .active:hover {
+    color: #fff;
+  }
+  > li {
+    .dropdown-menu {
+      border-top-right-radius: 6px;
+    }
+    > a {
+      @include breakpoint(sm) {
+        font-size: 14px;
+      }
+      @include breakpoint(md) {
+        font-size: $font-size-base;
+      }
+    }
+  }
+}
+#navbar {
+  .navbar-header {
+    @include breakpoint(sm) {
+      float: none;
+    }
+    @include breakpoint(md) {
+      float: left;
+      margin-right: 5px;
+    }
+    @include breakpoint(lg) {
+      float: left;
+      margin-right: 5px;
+    }
+  }
+  .open > a {
+    @include breakpoint(sm) {
+      color: $green;
+      border-top: 2px solid $green;
+      border-right: 2px solid $green;
+      border-left: 2px solid $green;
+      border-bottom: 4px solid white;
+      padding: 12px 13px;
+      z-index: 1000;
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+      //@include border-bottom-radius(6px);
+    }
+  }
+}
+#navbar .block-menu .nav {
+  li {
+    @include breakpoint(xs) {
+      display: inline-block;
+    }
+  }
+  a {
+    @extend .btn;
+    border: 2px solid $green;
+  }
+}
+#block-menu-menu-actions-menu {
+  @include breakpoint(xs) {
+    clear: both;
+    margin-bottom: 20px;
+  }
+}

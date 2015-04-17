@@ -1,0 +1,59 @@
+/*******************************************************************************
+ * _home_page.scss
+ *
+ * Layout styles for home page.
+ ******************************************************************************/
+
+.node-home-page {
+  .container {
+    @include breakpoint(sm) {
+      margin-bottom: 30px;
+    }
+    &.view-content {
+      margin-bottom: 0;
+    }
+  }
+}
+.view-home-case-study-logos,
+.group-cta-row .field-group-div {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+.field-name-promoted-case-study-logos,
+.group-cta-field-stripe {
+  background-color: $light-grey;
+}
+.field-name-field-home-cta-feature-text {
+  @include breakpoint(xs) {
+    text-align: center;
+  }
+  p {
+    font-size: 23px;
+    margin-bottom: 0;
+    @include breakpoint(sm) {
+      font-size: 35px;
+    }
+    @include breakpoint(md) {
+      font-size: 39px;
+    }
+  }
+  h2 {
+    font-size: 64px;
+    margin-top: 0;
+    @include breakpoint(sm) {
+      font-size: 97px;
+    }
+    @include breakpoint(md) {
+      font-size: 108px;
+    }
+  }
+}
+.field-name-field-home-graphic-cta-link .btn {
+  @include breakpoint(md) {
+    position: relative;
+    right: 50px;
+  }
+  @include breakpoint(lg) {
+    right: 112px;
+  }
+}

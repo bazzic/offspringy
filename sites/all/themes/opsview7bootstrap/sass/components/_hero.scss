@@ -1,0 +1,12 @@
+/*******************************************************************************
+ * _hero.scss
+ *
+ * Styles for Hero edge to edge layout region.
+ ******************************************************************************/
+.region-hero {
+  background-color: $light-grey;
+  margin-bottom: 35px;
+  .block-ds-extras {
+    padding-bottom: 35px;
+  }
+}

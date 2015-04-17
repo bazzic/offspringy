@@ -1,0 +1,25 @@
+/*******************************************************************************
+ * ckeditor.scss
+ *
+ * This file contains styles required for the wysiwyg editor on the site.
+ * Only the minimum bootstrap css files are imported.
+ *
+ ******************************************************************************/
+@import 'variables';
+@import 'bootstrap-sass/bootstrap.scss';
+@import 'bootstrap-sass/bootstrap/buttons';
+@import 'bootstrap-sass/bootstrap/forms';
+@import 'bootstrap-sass/bootstrap/mixins';
+@import 'bootstrap-sass/bootstrap/scaffolding';
+@import 'bootstrap-sass/bootstrap/tables';
+@import 'bootstrap-sass/bootstrap/theme';
+@import 'compass';
+@import 'utils/fonts';
+@import 'utils/mixins';
+@import 'utils/buttons';
+@import 'components/forms';
+@import 'components/typography';
+
+body.cke_editable {
+  padding:10px!important;
+}

@@ -1,0 +1,71 @@
+/*******************************************************************************
+ * _typography.scss
+ *
+ * The styling of typography across the site.
+ ******************************************************************************/
+
+
+/* ------------------------
+        Text styles
+--------------------------- */
+
+body {
+  font-family: $raleway-regular;
+  font-size: $font-size-base;
+  color: $body-colour;
+}
+h1,h2,h3,h4,h5,h6 { font-family: $raleway-regular; }
+h1 {
+  @include breakpoint(lg) {
+    font-size: 72px;
+  }
+}
+h2 {
+  @include breakpoint(lg) {
+    font-size: 60px;
+  }
+  .field-name-field-landing-f-img-left-body & {
+    @include raleway-regular();
+    @include breakpoint(md) {
+      font-size: 32px;
+    }
+  }
+  &.block-title {
+    font-size: 16px;
+    text-transform: uppercase;
+  }
+}
+blockquote {
+  font-size: $font-size-base * 1.25; // 16 x 1.25 = 20px
+  @include raleway-regular;
+  border-left: none;
+  color: #fff;
+  @include breakpoint(sm) {
+    font-size: $blockquote-font-size;
+  }
+}
+// Override bootstrap's text-center class to left align it on mobile
+.text-center {
+  @include breakpoint(xs) {
+    text-align: left;
+  }
+  // only if it's not applied to a link btn
+  &.btn {
+    text-align: center;
+    display: table;
+    margin: auto;
+
+  }
+}
+.orange {
+  @include text-color($orange);
+}
+.purple {
+  @include text-color($purple);
+}
+.blue {
+  @include text-color($blue);
+}
+.green {
+  @include text-color($green);
+}

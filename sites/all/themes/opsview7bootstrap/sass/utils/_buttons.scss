@@ -1,0 +1,39 @@
+/*******************************************************************************
+ * _buttons.scss
+ *
+ * Utilites/Mixins for buttons.
+ ******************************************************************************/
+
+.btn {
+  @include buttonify();
+  @include breakpoint(sm) {
+    @include button-size($padding-base-vertical, $padding-base-horizontal, 18px, 29px, $border-radius-base);
+  }
+}
+.btn-lg {
+  @include buttonify();
+  @include breakpoint(xs) {
+    @include button-size($padding-base-vertical, $padding-base-horizontal, 18px, 29px, $border-radius-base);
+  }
+  @include breakpoint(sm) {
+    @include button-size($padding-base-vertical * 2, $padding-base-horizontal * 2, 22px, 32px, $border-radius-base);
+  }
+  @include breakpoint(md) {
+    @include button-size($padding-base-vertical * 2, $padding-base-horizontal * 2, 28px, 42px, $border-radius-base);
+  }
+  @include breakpoint(lg) {
+    @include button-size($padding-base-vertical * 2, $padding-base-horizontal * 2, 36px, 58px, $border-radius-base);
+  }
+}
+// Action links styles
+#navbar .block-menu .nav a {
+  color: $green;
+  box-shadow: none !important;
+  &:hover {
+    background-color: $green;
+    color: white;
+  }
+}
+#link_to_top {
+  margin: 10px 0;
+}

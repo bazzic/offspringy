@@ -76,7 +76,7 @@
 <header id="navbar" role="banner" class="<?php print $navbar_classes; ?>">
   <div class="container">
     <div class="navbar-header">
-      <a class="logo navbar-btn pull-left" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>">
+      <a class="logo" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>">
         Offspringy
       </a>
 

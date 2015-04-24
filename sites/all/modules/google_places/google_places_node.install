@@ -1,0 +1,82 @@
+<?php
+/**
+ * @file
+ * Install, update and uninstall functions for the google_places module.
+ *
+ */
+
+/**
+ * Implements hook_install().
+ */
+function google_places_node_install() {
+  drupal_install_schema('google_places_node');
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function google_places_node_uninstall() {
+  drupal_uninstall_schema('google_places_node');
+}
+
+/**
+ * Implements hook_schema().
+ */
+function google_places_node_schema() {
+
+  $schema['google_places_node'] = array(
+    'description' => 'Google Places Nodes.',
+    'fields' => array(
+      'nid' => array(
+        'description' => 'Reference to {node}.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'vid' => array(
+        'description' => 'Reference to {node}.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'reference' => array(
+        'description' => 'The Google Places place ID.',
+        'type' => 'text',
+        'size' => 'medium',
+      ),
+    ),
+    'primary key' => array('nid', 'vid'),
+  );
+
+  $schema['google_places_node_place_info'] = array(
+    'description' => 'Google Places Node Place Info.',
+    'fields' => array(
+      'nid' => array(
+        'description' => 'Reference to {node}.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'created' => array(
+        'description' => t('When the info was obtained in UNIX timestamp format.'),
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'updated' => array(
+        'description' => t('When the info was last updated in UNIX timestamp format.'),
+        'type' => 'int',
+        'not null' => FALSE,
+      ),
+      'data' => array(
+        'description' => 'The serialised information obtained from Google.',
+        'type' => 'text',
+        'not null' => TRUE,
+        'size' => 'big',
+      ),
+    ),
+    'primary key' => array('nid'),
+  );
+
+  return $schema;
+
+}

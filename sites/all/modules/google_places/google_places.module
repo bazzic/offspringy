@@ -1,0 +1,280 @@
+<?php
+/**
+ * Valid permissions for this module
+ * @return array An array of valid permissions for the module
+ */
+function google_places_permission() {
+  return array(
+    'Administer google places' => array(
+      'title' => t('Administer google places'),
+      'description' => t('TODO Add a description for \'Administer google places\''),
+    ),
+  );
+}
+
+/**
+ * hook_menu
+ */
+function google_places_menu() {
+
+  $items = array();
+  $items['admin/google-places'] = array(
+    'page callback' => 'google_places_test',
+    'access arguments' => array('Administer google places'),
+    'type' => MENU_CALLBACK,
+  );
+  $items['admin/config/google-places'] = array(
+    'title' => 'Google Places Settings',
+    'description' => 'Confiure import settings.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('google_places_settings'),
+    'access arguments' => array('Administer google places'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['gp/autocomplete'] = array(
+      'title' => 'Google Places Autocomplete',
+      'description' => 'Test form input',
+      'page callback' => 'google_places_autocomplete_output',
+      'access arguments' => array('Administer google places'),
+      'type' => MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+
+/**
+ * Settings form
+ *
+ * @return array
+ */
+function google_places_settings($form, &$form_state) {
+  $form = array();
+
+  $form['google_places_api_key'] = array(
+    '#type' => 'textfield',
+    '#title' => t('API Key.'),
+    '#default_value' => variable_get('google_places_api_key', ''),
+    '#size' => 20,
+    '#maxlength' => 50,
+    '#required' => TRUE,
+  );
+
+  return system_settings_form($form);
+}
+
+function google_places_autocomplete_output() {
+  return drupal_render(drupal_get_form('google_places_autocomplete')) . '<div class="map_canvas"></div><pre id="logger">Log:</pre>';
+}
+
+function google_places_autocomplete($form, &$form_state) {
+  $form = array();
+  
+  $module = 'google_places';
+  
+  drupal_add_js("http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places");
+  drupal_add_js("http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js");
+  drupal_add_js(drupal_get_path('module', $module) . "/jquery.geocomplete.js");
+  drupal_add_js(drupal_get_path('module', $module) . "/google_places.js");
+
+  $form['geocomplete'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Search'),
+      '#size' => 20,
+      '#maxlength' => 50,
+      '#required' => TRUE,
+  );
+  
+  $form['find'] = array(
+      '#type' => 'button',
+      '#value' => t('find'),
+      '#size' => 20,
+  );
+  
+  
+
+  return $form;
+}
+
+/**
+ * @todo Please document this function.
+ * @see http://drupal.org/node/1354
+ */
+function google_places_test() {
+  //return google_places_get_place_info('CnRlAAAAFmmHZ98sEvP7UZk3YOKmcZMX1_Eor2WqBJ8FBUolvWXpIFUMTky846OPcV_74lHSoYDB8CEIRAMUOpyZmA_ciCgKDt1V8cunt36TEYKubwppEffZmKruD3i_izvvaM_zDiq6q-2In631p1aGjLnEpBIQ06Z44mi_7PwtwRT7gA5KDhoUvImCDplnA2qftEwYHVnMRWl096I');
+
+  /**
+   $node = node_load(8);
+   google_places_node_get_place_info($node);
+   return print_r($node, true);
+   **/
+
+
+  return google_places_get_places(53.454504, 	-2.225139, 2000, array('restaurant'));
+}
+
+
+/**
+ * @todo Please document this function.
+ * @see http://drupal.org/node/1354
+ */
+function google_places_get_place_info($place_id) {
+
+  // sample place id:
+
+//    CmRYAAAAciqGsTRX1mXRvuXSH2ErwW-jCINE1aLiwP64MCWDN5vkXvXoQGPKldMfmdGyqWSpm7BEYCgDm-iv7Kc2PF7QA7brMAwBbAcqMr5i1f4PwTpaovIZjysCEZTry8Ez30wpEhCNCXpynextCld2EBsDkRKsGhSLayuRyFsex6JA6NPh9dyupoTH3g
+
+  $endpoint = 'https://maps.googleapis.com/maps/api/place/details';
+
+  $output = 'json'; // json or XML
+
+  // https://maps.googleapis.com/maps/api/place/details/output?parameters
+
+  $params = array(
+    'reference' => $place_id,
+    'sensor' => 'true',
+    'key' => variable_get('google_places_api_key', ''),
+    //'language'		=>	'en-GB',
+  );
+
+  // http://unitstep.net/blog/2009/05/05/using-curl-in-php-to-access-https-ssltls-protected-sites/
+
+  $url = str_replace('&amp;', '&', sprintf('%s/%s?%s', $endpoint, $output, http_build_query($params)));
+
+  print drupal_get_path('module', 'google_places');
+
+  // Initialize session and set URL.
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $url);
+
+  // Set so curl_exec returns the result instead of outputting it.
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+  //curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+  //curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+  //curl_setopt($ch, CURLOPT_CAINFO, getcwd() . '/' . drupal_get_path('module', 'google_places') . '/BuiltinObjectToken-EquifaxSecureCA.crt');
+
+  // Get the response and close the channel.
+  $response = curl_exec($ch);
+  curl_close($ch);
+
+  print $response;
+
+  return $response;
+
+}
+
+
+/**
+ * @todo Please document this function.
+ * @see http://drupal.org/node/1354
+ */
+function google_places_get_places($lat, $lng, $radius, $types = array()) {
+
+  $endpoint = 'https://maps.googleapis.com/maps/api/place/search';
+  
+  $ac_endpoint = 'https://maps.googleapis.com/maps/api/place/autocomplete';
+  
+  $ac_params = array(
+      'input' => 'villa noria',
+      'key' => variable_get('google_places_api_key', ''),
+  );
+
+  $output = 'json'; // json or XML
+
+  // https://maps.googleapis.com/maps/api/place/details/output?parameters
+
+  $params = array(
+    'location' => $lat . ',' . $lng,
+    'radius' => $radius,
+    'types' => implode('|', $types),
+    'sensor' => 'true',
+    'key' => variable_get('google_places_api_key', ''),
+    'language' => 'en-GB',
+  );
+
+  // http://unitstep.net/blog/2009/05/05/using-curl-in-php-to-access-https-ssltls-protected-sites/
+
+  $url = str_replace('&amp;', '&', sprintf('%s/%s?%s', $endpoint, $output, http_build_query($params)));
+  
+  $ac_url = str_replace('&amp;', '&', sprintf('%s/%s?%s', $ac_endpoint, $output, http_build_query($ac_params)));
+
+  // Initialize session and set URL.
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $ac_url);
+
+  // Set so curl_exec returns the result instead of outputting it.
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+  //curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+  //curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+  //curl_setopt($ch, CURLOPT_CAINFO, getcwd() . '/' . drupal_get_path('module', 'google_places') . '/BuiltinObjectToken-EquifaxSecureCA.crt');
+
+  // Get the response and close the channel.
+  $response = curl_exec($ch);
+  curl_close($ch);
+
+  
+
+  $str = '';
+
+  $results = json_decode($response);
+  
+  print_r($results);exit;
+
+  foreach ($results->predictions as $place) {
+    $str .= $place->name . ',' . $place->reference . ',' . $place->geometry->location->lat . ',' . $place->geometry->location->lng . '<br />';
+  }
+
+  print $str;
+
+  return $str;
+}
+
+/**
+ *
+
+ {
+ "status": "OK",
+ "result": {
+ "name": "Google Sydney",
+ "vicinity": "Pirrama Road, Pyrmont",
+ "types": [ "establishment" ],
+ "formatted_phone_number": "(02) 9374 4000",
+ "formatted_address": "5/48 Pirrama Road, Pyrmont NSW, Australia",
+ "address_components": [ {
+ "long_name": "48",
+ "short_name": "48",
+ "types": [ "street_number" ]
+ }, {
+ "long_name": "Pirrama Road",
+ "short_name": "Pirrama Road",
+ "types": [ "route" ]
+ }, {
+ "long_name": "Pyrmont",
+ "short_name": "Pyrmont",
+ "types": [ "locality", "political" ]
+ }, {
+ "long_name": "NSW",
+ "short_name": "NSW",
+ "types": [ "administrative_area_level_1", "political" ]
+ }, {
+ "long_name": "2009",
+ "short_name": "2009",
+ "types": [ "postal_code" ]
+ } ],
+ "geometry": {
+ "location": {
+ "lat": -33.8669710,
+ "lng": 151.1958750
+ }
+ },
+ "rating": 4.5,
+ "url": "http://maps.google.com/maps/place?cid=10281119596374313554",
+ "icon": "http://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+ "reference": "CmRRAAAAUgylGnuntxKOuZy9_c5zxdFi6e491_Fv0m1hks5YkeaH7k1SP9ujAkG4GROr1XCHFnMsDhuEIgQQq2WWyd33oGRAT8Vwr8rjTWEYEMvCZ1RxTzXSVDZ4gEFqLZcRyAw_EhBS8uZHidMMbYHuf9KHapRyGhQQ1dnf3uMghMRBlXqJE6ygh_a3ag",
+ "id": "4f89212bf76dde31f092cfc14d7506555d85b5c7"
+ },
+ "html_attributions": [ ]
+ }
+
+
+ **/

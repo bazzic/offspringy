@@ -1,0 +1,4 @@
+name = Google Places Node
+description = Associate Nodes with Google Places
+core = 7.x
+dependencies[] = google_places

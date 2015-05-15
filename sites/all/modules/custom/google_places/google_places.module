@@ -71,7 +71,7 @@ function google_places_autocomplete($form, &$form_state) {
   $module = 'google_places';
   
   drupal_add_js("http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places");
-  drupal_add_js("http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js");
+  //drupal_add_js("http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js");
   drupal_add_js(drupal_get_path('module', $module) . "/jquery.geocomplete.js");
   drupal_add_js(drupal_get_path('module', $module) . "/google_places.js");
 

@@ -5,15 +5,15 @@
  ******************************************************************************/
  
  .logo {
-  font-family: 'Lobster';
-  color: #67BCDB;
+  font-family: 'Lobster', Cursive;
+  color: #E44424;
   font-size: 3em;
   text-transform: none;
   &,
   &:hover,
   &:focus {
     text-decoration: none;
-    color: #67BCDB;
+    color: #E44424;
   }
 }
 

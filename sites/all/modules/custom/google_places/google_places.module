@@ -218,7 +218,7 @@ function google_places_get_places($lat, $lng, $radius, $types = array()) {
 
   $results = json_decode($response);
   
-  print_r($results);exit;
+  //print_r($results);exit;
 
   foreach ($results->predictions as $place) {
     $str .= $place->name . ',' . $place->reference . ',' . $place->geometry->location->lat . ',' . $place->geometry->location->lng . '<br />';

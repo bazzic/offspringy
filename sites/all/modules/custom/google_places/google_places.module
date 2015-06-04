@@ -106,9 +106,19 @@ function google_places_test() {
    google_places_node_get_place_info($node);
    return print_r($node, true);
    **/
+  
+  google_places_get_places(50.550714, -4.943859, 10000, array('lodging'));
+  
+  /* foreach (range(50.18,58,0.02) as $lat) {
+    foreach (range(-10,1,0.02) as $lng) {
+      print "Lat=$lat and Lng=$lng";
+      //google_places_get_places($lat, $lng, 1000, array('lodging'));
+    } 
+    
+  } */
 
 
-  return google_places_get_places(53.454504, 	-2.225139, 2000, array('restaurant'));
+  //return google_places_get_places(53.47, 	-2.23, 1000, array('lodging'));
 }
 
 
@@ -129,8 +139,8 @@ function google_places_get_place_info($place_id) {
   // https://maps.googleapis.com/maps/api/place/details/output?parameters
 
   $params = array(
-    'reference' => $place_id,
-    'sensor' => 'true',
+    'placeid' => $place_id,
+    //'sensor' => 'true',
     'key' => variable_get('google_places_api_key', ''),
     //'language'		=>	'en-GB',
   );
@@ -138,6 +148,8 @@ function google_places_get_place_info($place_id) {
   // http://unitstep.net/blog/2009/05/05/using-curl-in-php-to-access-https-ssltls-protected-sites/
 
   $url = str_replace('&amp;', '&', sprintf('%s/%s?%s', $endpoint, $output, http_build_query($params)));
+  
+  //print $url;exit;
 
   print drupal_get_path('module', 'google_places');
 
@@ -156,7 +168,7 @@ function google_places_get_place_info($place_id) {
   $response = curl_exec($ch);
   curl_close($ch);
 
-  print $response;
+  //print $response;
 
   return $response;
 
@@ -169,7 +181,7 @@ function google_places_get_place_info($place_id) {
  */
 function google_places_get_places($lat, $lng, $radius, $types = array()) {
 
-  $endpoint = 'https://maps.googleapis.com/maps/api/place/search';
+  $endpoint = 'https://maps.googleapis.com/maps/api/place/radarsearch';
   
   $ac_endpoint = 'https://maps.googleapis.com/maps/api/place/autocomplete';
   
@@ -183,6 +195,7 @@ function google_places_get_places($lat, $lng, $radius, $types = array()) {
   // https://maps.googleapis.com/maps/api/place/details/output?parameters
 
   $params = array(
+    //'keyword' => 'hotel',
     'location' => $lat . ',' . $lng,
     'radius' => $radius,
     'types' => implode('|', $types),
@@ -199,7 +212,7 @@ function google_places_get_places($lat, $lng, $radius, $types = array()) {
 
   // Initialize session and set URL.
   $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, $ac_url);
+  curl_setopt($ch, CURLOPT_URL, $url);
 
   // Set so curl_exec returns the result instead of outputting it.
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -210,6 +223,7 @@ function google_places_get_places($lat, $lng, $radius, $types = array()) {
 
   // Get the response and close the channel.
   $response = curl_exec($ch);
+  //print_r($response);exit;
   curl_close($ch);
 
   
@@ -218,13 +232,63 @@ function google_places_get_places($lat, $lng, $radius, $types = array()) {
 
   $results = json_decode($response);
   
-  //print_r($results);exit;
-
-  foreach ($results->predictions as $place) {
-    $str .= $place->name . ',' . $place->reference . ',' . $place->geometry->location->lat . ',' . $place->geometry->location->lng . '<br />';
+  //print_r($results->results);exit;
+  
+  foreach ($results->results as $acc) {
+    if (!_place_id_exists($acc->place_id)) {
+      $place_json = google_places_get_place_info($acc->place_id);
+      $place_array = drupal_json_decode($place_json);
+      print_r($place_array);
+      $address1 = $city = $country = $postal_code = '';
+      foreach($place_array['result']['address_components'] as $address) {
+        if (in_array('street_number', $address['types'])) {
+          $address1 .= $address['long_name'] . " ";
+        } else if (in_array('route', $address['types'])) {
+          $address1 .= $address['long_name'];
+        } else if (in_array('postal_town', $address['types'])) {
+          $city = $address['long_name'];
+        } else if (in_array('locality', $address['types'])) {
+          $city = $address['long_name'];
+        } else if (in_array('country', $address['types'])) {
+          $country = $address['short_name'];
+        } else if (in_array('postal_code', $address['types'])) {
+          $postal_code = $address['long_name'];
+        }
+      }
+      //print_r($place_array);exit;
+      $node = new stdClass();
+      $node->type = 'accommodation';
+      $node->comment = 2;
+      $node->title = $place_array['result']['name'];
+      $node->field_place_id[LANGUAGE_NONE][0]['value'] = $place_array['result']['place_id'];
+      if ($place_array['result']['website']) {
+        $node->field_website[LANGUAGE_NONE][0]['url'] = $place_array['result']['website'];
+      }
+      
+      $node->field_phone_number[LANGUAGE_NONE][0]['value'] = $place_array['result']['international_phone_number'];
+      $node->field_phone[LANGUAGE_NONE][0]['value'] = $place_array['result']['formatted_phone_number'];
+      $node->field_geofield[LANGUAGE_NONE][0] = array(
+        'lat' => $place_array['result']['geometry']['location']['lat'],
+        'lon' => $place_array['result']['geometry']['location']['lng'],
+      );
+      $node->field_address[LANGUAGE_NONE][0] = array(
+          'country' => $country,
+          'thoroughfare' => $address1,
+          'locality' => $city,
+          'postal_code' => $postal_code,
+      );
+      node_save($node);
+      print_r($node);
+      //exit;
+    }
   }
 
-  print $str;
+
+  /* foreach ($results->predictions as $place) {
+    $str .= $place->name . ',' . $place->reference . ',' . $place->geometry->location->lat . ',' . $place->geometry->location->lng . '<br />';
+  } */
+
+  //print $str;
 
   return $str;
 }
@@ -278,3 +342,11 @@ function google_places_get_places($lat, $lng, $radius, $types = array()) {
 
 
  **/
+
+function _place_id_exists($place_id) {
+  return db_select('field_data_field_place_id', 'f')
+  ->fields('f', array('field_place_id_value'))
+  ->condition('field_place_id_value', $place_id,'=')
+  ->range(0,1)
+  ->execute()->fetchField();
+}

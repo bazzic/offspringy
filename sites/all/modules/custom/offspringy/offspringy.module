@@ -1,0 +1,16 @@
+<?php
+
+function offspringy_facet_items_alter(&$build, &$settings) {
+  if ($settings->facet == "YOUR_FACET_NAME") {
+    foreach($build as $key => $item) {
+      $build[$key]["#markup"] = ucwords($item["#markup"]);
+    }
+  }
+}
+
+function offspringy_search_api_index_items_alter(array &$items, SearchApiIndex $index) {
+  foreach ($items as $id => $item) {
+    $postal_array = explode(' ', $item->field_address[LANGUAGE_NONE][0]['postal_code']);
+    $items[$id]->field_address[LANGUAGE_NONE][0]['postal_code'] = $postal_array[0];
+  }
+}
